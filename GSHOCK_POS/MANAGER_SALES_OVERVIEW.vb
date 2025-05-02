@@ -10,7 +10,7 @@
     End Sub
 
     Private Sub C3_Click(sender As Object, e As EventArgs) Handles C3.Click
-        Me.Hide()
+
     End Sub
 
     Private Sub DAILY_Click(sender As Object, e As EventArgs) Handles DAILY.Click
@@ -38,5 +38,25 @@
 
     Private Sub MP_Click(sender As Object, e As EventArgs)
 
+    End Sub
+
+    Private Sub Button3_Click(sender As Object, e As EventArgs) Handles Button3.Click
+        ADD_USERS.Show()
+        Me.Hide()
+    End Sub
+
+    Private Sub Button4_Click(sender As Object, e As EventArgs) Handles Button4.Click
+        STARTUP.Show()
+        Me.Hide()
+    End Sub
+
+    Private Sub Button1_Click(sender As Object, e As EventArgs) Handles Button1.Click
+        PRODUCT_WEB.Show()
+        Me.Hide()
+    End Sub
+
+    Private Sub Button2_Click(sender As Object, e As EventArgs) Handles Button2.Click
+        PROMO_WEB.Show()
+        Me.Hide()
     End Sub
 End Class

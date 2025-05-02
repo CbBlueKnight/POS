@@ -23,57 +23,61 @@ Partial Class CASH_CASHIER
     <System.Diagnostics.DebuggerStepThrough()> _
     Private Sub InitializeComponent()
         Dim resources As System.ComponentModel.ComponentResourceManager = New System.ComponentModel.ComponentResourceManager(GetType(CASH_CASHIER))
-        Me.txtAmountDue = New System.Windows.Forms.TextBox()
-        Me.txtAmountTendered = New System.Windows.Forms.TextBox()
+        Me.txtTotal = New System.Windows.Forms.TextBox()
+        Me.txtPayment = New System.Windows.Forms.TextBox()
         Me.txtChange = New System.Windows.Forms.TextBox()
-        Me.btnSubmit = New System.Windows.Forms.Button()
+        Me.btnConfirm = New System.Windows.Forms.Button()
         Me.btnClose = New System.Windows.Forms.Button()
         Me.Label1 = New System.Windows.Forms.Label()
         Me.Label2 = New System.Windows.Forms.Label()
         Me.Label3 = New System.Windows.Forms.Label()
         Me.Label4 = New System.Windows.Forms.Label()
         Me.Panel3 = New System.Windows.Forms.Panel()
+        Me.Button2 = New System.Windows.Forms.Button()
         Me.MP = New System.Windows.Forms.Button()
         Me.Button1 = New System.Windows.Forms.Button()
         Me.PictureBox1 = New System.Windows.Forms.PictureBox()
-        Me.Button2 = New System.Windows.Forms.Button()
         Me.Panel3.SuspendLayout()
         CType(Me.PictureBox1, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.SuspendLayout()
         '
-        'txtAmountDue
+        'txtTotal
         '
-        Me.txtAmountDue.Font = New System.Drawing.Font("Arial Narrow", 12.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.txtAmountDue.Location = New System.Drawing.Point(572, 280)
-        Me.txtAmountDue.Name = "txtAmountDue"
-        Me.txtAmountDue.Size = New System.Drawing.Size(393, 26)
-        Me.txtAmountDue.TabIndex = 0
+        Me.txtTotal.Enabled = False
+        Me.txtTotal.Font = New System.Drawing.Font("Arial Narrow", 12.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.txtTotal.Location = New System.Drawing.Point(572, 280)
+        Me.txtTotal.Name = "txtTotal"
+        Me.txtTotal.ReadOnly = True
+        Me.txtTotal.Size = New System.Drawing.Size(393, 26)
+        Me.txtTotal.TabIndex = 0
         '
-        'txtAmountTendered
+        'txtPayment
         '
-        Me.txtAmountTendered.Font = New System.Drawing.Font("Microsoft Sans Serif", 12.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.txtAmountTendered.Location = New System.Drawing.Point(572, 333)
-        Me.txtAmountTendered.Name = "txtAmountTendered"
-        Me.txtAmountTendered.Size = New System.Drawing.Size(393, 26)
-        Me.txtAmountTendered.TabIndex = 1
+        Me.txtPayment.Font = New System.Drawing.Font("Microsoft Sans Serif", 12.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.txtPayment.Location = New System.Drawing.Point(572, 333)
+        Me.txtPayment.MaxLength = 10
+        Me.txtPayment.Name = "txtPayment"
+        Me.txtPayment.Size = New System.Drawing.Size(393, 26)
+        Me.txtPayment.TabIndex = 1
         '
         'txtChange
         '
+        Me.txtChange.Enabled = False
         Me.txtChange.Font = New System.Drawing.Font("Arial Narrow", 12.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.txtChange.Location = New System.Drawing.Point(574, 385)
         Me.txtChange.Name = "txtChange"
         Me.txtChange.Size = New System.Drawing.Size(393, 26)
         Me.txtChange.TabIndex = 2
         '
-        'btnSubmit
+        'btnConfirm
         '
-        Me.btnSubmit.Font = New System.Drawing.Font("Arial Narrow", 15.75!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.btnSubmit.Location = New System.Drawing.Point(611, 444)
-        Me.btnSubmit.Name = "btnSubmit"
-        Me.btnSubmit.Size = New System.Drawing.Size(310, 34)
-        Me.btnSubmit.TabIndex = 3
-        Me.btnSubmit.Text = "CONFIRM PAYMENT"
-        Me.btnSubmit.UseVisualStyleBackColor = True
+        Me.btnConfirm.Font = New System.Drawing.Font("Arial Narrow", 15.75!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.btnConfirm.Location = New System.Drawing.Point(611, 444)
+        Me.btnConfirm.Name = "btnConfirm"
+        Me.btnConfirm.Size = New System.Drawing.Size(310, 34)
+        Me.btnConfirm.TabIndex = 3
+        Me.btnConfirm.Text = "CONFIRM PAYMENT"
+        Me.btnConfirm.UseVisualStyleBackColor = True
         '
         'btnClose
         '
@@ -147,6 +151,17 @@ Partial Class CASH_CASHIER
         Me.Panel3.Size = New System.Drawing.Size(1386, 47)
         Me.Panel3.TabIndex = 29
         '
+        'Button2
+        '
+        Me.Button2.FlatStyle = System.Windows.Forms.FlatStyle.Flat
+        Me.Button2.ForeColor = System.Drawing.Color.Red
+        Me.Button2.Location = New System.Drawing.Point(1208, 12)
+        Me.Button2.Name = "Button2"
+        Me.Button2.Size = New System.Drawing.Size(75, 23)
+        Me.Button2.TabIndex = 31
+        Me.Button2.Text = "RETURN"
+        Me.Button2.UseVisualStyleBackColor = True
+        '
         'MP
         '
         Me.MP.BackColor = System.Drawing.SystemColors.AppWorkspace
@@ -186,17 +201,6 @@ Partial Class CASH_CASHIER
         Me.PictureBox1.TabIndex = 1
         Me.PictureBox1.TabStop = False
         '
-        'Button2
-        '
-        Me.Button2.FlatStyle = System.Windows.Forms.FlatStyle.Flat
-        Me.Button2.ForeColor = System.Drawing.Color.Red
-        Me.Button2.Location = New System.Drawing.Point(1208, 12)
-        Me.Button2.Name = "Button2"
-        Me.Button2.Size = New System.Drawing.Size(75, 23)
-        Me.Button2.TabIndex = 31
-        Me.Button2.Text = "RETURN"
-        Me.Button2.UseVisualStyleBackColor = True
-        '
         'CASH_CASHIER
         '
         Me.AutoScaleDimensions = New System.Drawing.SizeF(6.0!, 13.0!)
@@ -210,10 +214,10 @@ Partial Class CASH_CASHIER
         Me.Controls.Add(Me.Label2)
         Me.Controls.Add(Me.Label1)
         Me.Controls.Add(Me.btnClose)
-        Me.Controls.Add(Me.btnSubmit)
+        Me.Controls.Add(Me.btnConfirm)
         Me.Controls.Add(Me.txtChange)
-        Me.Controls.Add(Me.txtAmountTendered)
-        Me.Controls.Add(Me.txtAmountDue)
+        Me.Controls.Add(Me.txtPayment)
+        Me.Controls.Add(Me.txtTotal)
         Me.FormBorderStyle = System.Windows.Forms.FormBorderStyle.None
         Me.Name = "CASH_CASHIER"
         Me.Text = "CASH_CASHIER"
@@ -224,10 +228,10 @@ Partial Class CASH_CASHIER
 
     End Sub
 
-    Friend WithEvents txtAmountDue As TextBox
-    Friend WithEvents txtAmountTendered As TextBox
+    Friend WithEvents txtTotal As TextBox
+    Friend WithEvents txtPayment As TextBox
     Friend WithEvents txtChange As TextBox
-    Friend WithEvents btnSubmit As Button
+    Friend WithEvents btnConfirm As Button
     Friend WithEvents btnClose As Button
     Friend WithEvents Label1 As Label
     Friend WithEvents Label2 As Label

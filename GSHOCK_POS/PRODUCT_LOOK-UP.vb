@@ -1,305 +1,288 @@
 ﻿Imports System.Data.SqlClient
 
 Public Class PRODUCT_LOOK_UP
-
-    ' Connection String
-    Private con As New SqlConnection("Data Source=MS-SOPHIE;Integrated Security=True;Connect Timeout=30;Encrypt=True;TrustServerCertificate=True;ApplicationIntent=ReadWrite;MultiSubnetFailover=False")
-    Private total As Decimal = 0
-
-    ' Store matched products
-    Private matchedProducts As New List(Of Product)()
-    Private currentIndex As Integer = -1 ' To keep track of the current index in matched products
-
-    ' Product structure to hold product data
-    Public Class Product
-        Public Property ID As String
-        Public Property ProductName As String
-        Public Property Series As String
-        Public Property Price As Decimal
-        Public Property Quantity As Integer
-    End Class
+    Dim con As New SqlConnection("Data Source=DESKTOP-UD7BN0F;Initial Catalog=gshock;Integrated Security=True;Connect Timeout=30;Encrypt=True;TrustServerCertificate=True;ApplicationIntent=ReadWrite;MultiSubnetFailover=False")
+    Dim dtProducts As New DataTable()
+    Dim dtOrders As New DataTable()
+    Private discountWarningShown As Boolean = False
 
     Private Sub PRODUCT_LOOK_UP_Load(sender As Object, e As EventArgs) Handles MyBase.Load
-        LoadData()
+        LoadProducts()
+        SetupOrdersTable()
+        SetupDiscountControls()
     End Sub
 
-    Private Sub LoadData()
-        Try
-            Using con As New SqlConnection("Data Source=MS-SOPHIE;Integrated Security=True;Connect Timeout=30;Encrypt=True;TrustServerCertificate=True;ApplicationIntent=ReadWrite;MultiSubnetFailover=False")
-                con.Open()
+    Private Sub LoadProducts()
+        dtProducts.Clear()
+        Using da As New SqlDataAdapter("SELECT * FROM products", con)
+            da.Fill(dtProducts)
+        End Using
 
-                Dim inventoryAdapter As New SqlDataAdapter("SELECT * FROM gshock.dbo.products", con)
-                Dim inventoryTable As New DataTable()
-                inventoryAdapter.Fill(inventoryTable)
-                DataGridView1.DataSource = inventoryTable
+        dgvProducts.DataSource = dtProducts
+        dgvProducts.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.Fill
 
-                Dim cartAdapter As New SqlDataAdapter("SELECT * FROM gshock.dbo.lookup", con)
-                Dim cartTable As New DataTable()
-                cartAdapter.Fill(cartTable)
-                DataGridView2.DataSource = cartTable
-            End Using
-        Catch ex As Exception
-            MessageBox.Show("Error loading data: " & ex.Message)
-        End Try
-    End Sub
-
-    Private Sub btnadd_Click(sender As Object, e As EventArgs) Handles btnadd.Click
-        If Not String.IsNullOrWhiteSpace(TextBox5.Text) AndAlso IsNumeric(TextBox1.Text) Then
-            Dim quantity As Integer = Convert.ToInt32(TextBox1.Text)
-            If quantity > 0 Then
-                AddToCart(TextBox5.Text, TextBox6.Text, quantity)
-            Else
-                MessageBox.Show("Quantity must be greater than 0.")
+        For Each colName In {"image", "date", "total"}
+            If dgvProducts.Columns.Contains(colName) Then
+                dgvProducts.Columns(colName).Visible = False
             End If
-        Else
-            MessageBox.Show("Please select a product and enter a valid quantity.")
-        End If
+        Next
     End Sub
 
-    Private Sub AddToCart(productId As String, productName As String, quantity As Integer)
-        If quantity <= 0 Then Exit Sub
+    Private Sub SetupOrdersTable()
+        dtOrders.Columns.Clear()
+        dtOrders.Columns.AddRange({
+            New DataColumn("id"),
+            New DataColumn("productname"),
+            New DataColumn("series"),
+            New DataColumn("price", GetType(Decimal)),
+            New DataColumn("quantity", GetType(Integer)),
+            New DataColumn("total", GetType(Decimal)),
+            New DataColumn("date_added", GetType(Date))
+        })
 
-        Try
-            Using con As New SqlConnection("Data Source=MS-SOPHIE;Integrated Security=True;Connect Timeout=30;Encrypt=True;TrustServerCertificate=True;ApplicationIntent=ReadWrite;MultiSubnetFailover=False")
-                con.Open()
-
-                Dim cmd As New SqlCommand("SELECT id, productname, series, price, quantity FROM gshock.dbo.products WHERE id = @id", con)
-                cmd.Parameters.AddWithValue("@id", productId)
-
-                Using reader As SqlDataReader = cmd.ExecuteReader()
-                    If reader.Read() Then
-                        Dim stock As Integer = Convert.ToInt32(reader("quantity"))
-                        Dim price As Decimal = Convert.ToDecimal(reader("price"))
-                        Dim series As String = reader("series").ToString()
-                        Dim Name As String = reader("productname").ToString()
-                        reader.Close()
-
-                        If stock >= quantity Then
-                            Dim totalPrice As Decimal = price * quantity
-                            total += totalPrice
-
-                            Dim updateTotalCmd As New SqlCommand("UPDATE gshock.dbo.products SET total = @total WHERE id = @id", con)
-                            updateTotalCmd.Parameters.AddWithValue("@total", price * stock)
-                            updateTotalCmd.Parameters.AddWithValue("@id", productId)
-                            updateTotalCmd.ExecuteNonQuery()
-
-                            UpdateInventory(con, productId, quantity)
-                            UpdateCart(con, productId, Name, series, quantity, totalPrice)
-
-                            TextBox2.Text = total.ToString("F2")
-                            ClearProductFields()
-                            LoadData()
-                        Else
-                            MessageBox.Show("Not enough stock for " & Name)
-                            Me.Close()
-                        End If
-                    Else
-                        MessageBox.Show("Product not found!")
-                    End If
-                End Using
-            End Using
-        Catch ex As Exception
-            MessageBox.Show("Database error: " & ex.Message)
-        End Try
+        dgvOrders.DataSource = dtOrders
+        dgvOrders.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.Fill
     End Sub
 
-    Private Sub UpdateInventory(con As SqlConnection, productId As String, quantity As Integer)
-        Try
-            Using cmd As New SqlCommand("UPDATE gshock.dbo.products SET quantity = quantity - @quantity WHERE id = @id", con)
-                cmd.Parameters.AddWithValue("@quantity", quantity)
-                cmd.Parameters.AddWithValue("@id", productId)
-                cmd.ExecuteNonQuery()
-            End Using
-        Catch ex As Exception
-            MessageBox.Show("Error updating inventory: " & ex.Message)
-        End Try
+    Private Sub SetupDiscountControls()
+        lblDiscountID.Visible = False
+        txtDiscountID.Visible = False
+        cmbDiscountType.Items.AddRange(New String() {"None", "Senior", "PWD"})
+        cmbDiscountType.SelectedIndex = 0
     End Sub
 
-    Private Sub ClearProductFields()
-        TextBox5.Clear()
-        TextBox6.Clear()
-        TextBox7.Clear()
-        TextBox8.Clear()
-        TextBox1.Clear()
+    Private Sub txtSearch_TextChanged(sender As Object, e As EventArgs) Handles txtSearch.TextChanged
+        Dim dv As New DataView(dtProducts)
+        dv.RowFilter = $"id LIKE '%{txtSearch.Text}%' OR productname LIKE '%{txtSearch.Text}%'"
+        dgvProducts.DataSource = dv
     End Sub
 
-    Private Sub Button1_Click(sender As Object, e As EventArgs) Handles Button1.Click
-        Dim payment As Decimal
-        If Decimal.TryParse(TextBox3.Text, payment) Then
-            If payment < 0 Then
-                MessageBox.Show("Payment cannot be negative!")
-            ElseIf payment >= total Then
-                ' Set TextBox4.Text to show the payment amount formatted as currency
-                TextBox4.Text = payment.ToString("F2")
-
-                ' Insert payment details into the database
-                Try
-                    Using con As New SqlConnection("Data Source=MS-SOPHIE;Integrated Security=True;Connect Timeout=30;Encrypt=True;TrustServerCertificate=True;ApplicationIntent=ReadWrite;MultiSubnetFailover=False")
-                        con.Open()
-                        Dim cmd As New SqlCommand("INSERT INTO gshock.dbo.lookup (payment, [date]) VALUES (@payment, @date)", con)
-                        cmd.Parameters.AddWithValue("@payment", payment)
-                        cmd.Parameters.AddWithValue("@date", DateTime.Now)
-                        cmd.ExecuteNonQuery()
-                    End Using
-                Catch ex As Exception
-                    MessageBox.Show("Error saving change: " & ex.Message)
-                End Try
-
-                ' Notify user of success
-                MessageBox.Show("Payment successful! Change: " & TextBox4.Text)
-                LoadData() ' Assuming LoadData is a method you have defined elsewhere
-            Else
-                MessageBox.Show("Insufficient payment!")
-            End If
-        Else
-            MessageBox.Show("Invalid payment amount!")
-        End If
-    End Sub
-
-
-    Private Sub Button2_Click(sender As Object, e As EventArgs) Handles Button2.Click
-        StartNewTransaction()
-    End Sub
-
-    Private Sub StartNewTransaction()
-        total = 0
-        TextBox1.Text = "1"
-        TextBox2.Clear()
-        TextBox3.Clear()
-        TextBox4.Clear()
-
-        Try
-            Using con As New SqlConnection("Data Source=MS-SOPHIE;Integrated Security=True;Connect Timeout=30;Encrypt=True;TrustServerCertificate=True;ApplicationIntent=ReadWrite;MultiSubnetFailover=False")
-                con.Open()
-                Dim cmd As New SqlCommand("DELETE FROM gshock.dbo.lookup", con)
-                cmd.ExecuteNonQuery()
-            End Using
-        Catch ex As Exception
-            MessageBox.Show("Error clearing cart: " & ex.Message)
-        End Try
-
-        MessageBox.Show("New transaction started.")
-        LoadData()
-    End Sub
-
-    Private Sub PRODUCT_LOOK_UP_FormClosing(sender As Object, e As FormClosingEventArgs) Handles MyBase.FormClosing
-        Try
-            Using con As New SqlConnection("Data Source=MS-SOPHIE;Integrated Security=True;Connect Timeout=30;Encrypt=True;TrustServerCertificate=True;ApplicationIntent=ReadWrite;MultiSubnetFailover=False")
-                Dim cmd As New SqlCommand("DELETE FROM gshock.dbo.lookup", con)
-                cmd.ExecuteNonQuery()
-            End Using
-        Catch ex As Exception
-            MessageBox.Show("Error resetting cart: " & ex.Message)
-        End Try
-    End Sub
-
-    Private Sub TextBox_KeyPress(sender As Object, e As KeyPressEventArgs) Handles TextBox1.KeyPress, TextBox2.KeyPress, TextBox3.KeyPress, TextBox4.KeyPress
-        If Not Char.IsControl(e.KeyChar) AndAlso Not Char.IsDigit(e.KeyChar) Then
-            e.Handled = True
-        End If
-    End Sub
-
-    Private Sub DataGridView1_CellClick(sender As Object, e As DataGridViewCellEventArgs) Handles DataGridView1.CellClick
+    Private Sub dgvProducts_CellClick(sender As Object, e As DataGridViewCellEventArgs) Handles dgvProducts.CellClick
         If e.RowIndex >= 0 Then
-            Dim row As DataGridViewRow = DataGridView1.Rows(e.RowIndex)
-            TextBox5.Text = row.Cells("id").Value.ToString()
-            TextBox6.Text = row.Cells("productname").Value.ToString()
-            TextBox7.Text = row.Cells("series").Value.ToString()
-            TextBox8.Text = row.Cells("price").Value.ToString()
-            TextBox1.Text = row.Cells("quantity").Value.ToString()
+            Dim row = dgvProducts.Rows(e.RowIndex)
+            txtReference.Text = row.Cells("id").Value.ToString()
+            txtProductName.Text = row.Cells("productname").Value.ToString()
+            txtSeries.Text = row.Cells("series").Value.ToString()
+            txtPrice.Text = row.Cells("price").Value.ToString()
+            txtQuantity.Text = "1"
+            CalculateItemTotal()
         End If
     End Sub
 
-    Private Sub MP_Click(sender As Object, e As EventArgs)
-        Me.Show()
+    Private Sub dgvOrders_CellClick(sender As Object, e As DataGridViewCellEventArgs) Handles dgvOrders.CellClick
+        If e.RowIndex >= 0 AndAlso MessageBox.Show("Remove this item from cart?", "Confirm", MessageBoxButtons.YesNo, MessageBoxIcon.Question) = DialogResult.Yes Then
+            Dim row = dgvOrders.Rows(e.RowIndex)
+            Dim productId = row.Cells("id").Value.ToString()
+            Dim removedQty = Convert.ToInt32(row.Cells("quantity").Value)
+
+            dtOrders.Rows.RemoveAt(e.RowIndex)
+
+            For Each prodRow As DataGridViewRow In dgvProducts.Rows
+                If prodRow.Cells("id").Value.ToString() = productId Then
+                    prodRow.Cells("quantity").Value = Convert.ToInt32(prodRow.Cells("quantity").Value) + removedQty
+                    Exit For
+                End If
+            Next
+
+            CalculateCartTotal()
+        End If
+    End Sub
+
+    Private Sub txtQuantity_TextChanged(sender As Object, e As EventArgs) Handles txtQuantity.TextChanged, txtPrice.TextChanged
+        CalculateItemTotal()
+    End Sub
+
+    Private Sub CalculateItemTotal()
+        Dim price As Decimal = 0
+        Dim quantity As Integer = 0
+        Decimal.TryParse(txtPrice.Text, price)
+        Integer.TryParse(txtQuantity.Text, quantity)
+        txtTotal.Text = (price * quantity).ToString("F2")
+    End Sub
+
+    Private Sub CalculateCartTotal(Optional validateDiscount As Boolean = True)
+        Dim grandTotal As Decimal = 0
+        Dim highestPriceRow As DataRow = Nothing
+        Dim applyDiscount = (cmbDiscountType.Text = "Senior" Or cmbDiscountType.Text = "PWD")
+
+        For Each row As DataRow In dtOrders.Rows
+            If highestPriceRow Is Nothing OrElse Convert.ToDecimal(row("price")) > Convert.ToDecimal(highestPriceRow("price")) Then
+                highestPriceRow = row
+            End If
+        Next
+
+        If applyDiscount Then
+            If validateDiscount AndAlso Not System.Text.RegularExpressions.Regex.IsMatch(txtDiscountID.Text, "^\d{6}$") Then
+                If Not discountWarningShown Then
+                    MessageBox.Show($"Please enter a valid 6-digit ID for {cmbDiscountType.Text} discount.", "Invalid ID", MessageBoxButtons.OK, MessageBoxIcon.Warning)
+                    discountWarningShown = True
+                End If
+                txtTotal.Text = "0.00"
+                Return
+            Else
+                discountWarningShown = False
+            End If
+        End If
+
+        For Each row As DataRow In dtOrders.Rows
+            Dim rowTotal As Decimal = Convert.ToDecimal(row("total"))
+            If row Is highestPriceRow AndAlso applyDiscount Then
+                rowTotal *= 0.8D
+            End If
+            grandTotal += rowTotal
+        Next
+
+        txtTotal.Text = grandTotal.ToString("F2")
+    End Sub
+
+    Private Sub btnAdd_Click(sender As Object, e As EventArgs) Handles btnAdd.Click
+        If txtReference.Text = "" OrElse Not Integer.TryParse(txtQuantity.Text, 0) Then
+            MessageBox.Show("Please select a product and enter a valid quantity.")
+            Return
+        End If
+
+        Dim productId = txtReference.Text
+        Dim inputQuantity = Integer.Parse(txtQuantity.Text)
+
+        For Each row As DataGridViewRow In dgvProducts.Rows
+            If row.Cells("id").Value.ToString() = productId Then
+                Dim availableQty = Convert.ToInt32(row.Cells("quantity").Value)
+                If inputQuantity > availableQty Then
+                    MessageBox.Show("Not enough stock available.")
+                    Return
+                End If
+                row.Cells("quantity").Value = availableQty - inputQuantity
+                Exit For
+            End If
+        Next
+
+        Dim existingRow = dtOrders.Rows.Cast(Of DataRow)().FirstOrDefault(Function(r) r("id").ToString() = productId)
+
+        If existingRow IsNot Nothing Then
+            Dim newQty = Convert.ToInt32(existingRow("quantity")) + inputQuantity
+            existingRow("quantity") = newQty
+            existingRow("total") = newQty * Convert.ToDecimal(txtPrice.Text)
+        Else
+            dtOrders.Rows.Add(productId, txtProductName.Text, txtSeries.Text, Convert.ToDecimal(txtPrice.Text), inputQuantity, Convert.ToDecimal(txtPrice.Text) * inputQuantity, Date.Today)
+        End If
+
+        CalculateCartTotal()
+    End Sub
+
+    Private Sub btnNewTransaction_Click(sender As Object, e As EventArgs) Handles btnNewTransaction.Click
+        NewTransaction()
+    End Sub
+
+    Private Sub NewTransaction()
+        ' Return quantities to stock
+        For Each row As DataRow In dtOrders.Rows
+            Dim productId = row("id").ToString()
+            Dim qtyToReturn = Convert.ToInt32(row("quantity"))
+
+            For Each prodRow As DataGridViewRow In dgvProducts.Rows
+                If prodRow.Cells("id").Value.ToString() = productId Then
+                    prodRow.Cells("quantity").Value = Convert.ToInt32(prodRow.Cells("quantity").Value) + qtyToReturn
+                    Exit For
+                End If
+            Next
+        Next
+
+        ' Clear the in-memory cart and form fields
+        dtOrders.Clear()
+        txtReference.Clear()
+        txtProductName.Clear()
+        txtSeries.Clear()
+        txtPrice.Clear()
+        txtQuantity.Clear()
+        txtTotal.Clear()
+
+        ' Clear SUM and LOOKUP tables in the database
+        Try
+            con.Open()
+
+            Using cmd As New SqlCommand("DELETE FROM sum; DELETE FROM lookup;", con)
+                cmd.ExecuteNonQuery()
+            End Using
+
+        Catch ex As Exception
+            MessageBox.Show("Failed to clear transaction data: " & ex.Message, "Database Error", MessageBoxButtons.OK, MessageBoxIcon.Error)
+        Finally
+            con.Close()
+        End Try
+
+        CalculateCartTotal()
+    End Sub
+
+    Private Sub cmbDiscountType_SelectedIndexChanged(sender As Object, e As EventArgs) Handles cmbDiscountType.SelectedIndexChanged
+        Dim isDiscount = (cmbDiscountType.Text = "Senior" Or cmbDiscountType.Text = "PWD")
+        lblDiscountID.Visible = isDiscount
+        txtDiscountID.Visible = isDiscount
+        If Not isDiscount Then txtDiscountID.Clear()
+        CalculateCartTotal()
+    End Sub
+
+    Private Sub txtDiscountID_TextChanged(sender As Object, e As EventArgs) Handles txtDiscountID.TextChanged
+        CalculateCartTotal()
+    End Sub
+
+    Private Sub SaveTransaction()
+        If dtOrders.Rows.Count = 0 Then
+            MessageBox.Show("Cart is empty. Add products before proceeding.", "Empty Cart", MessageBoxButtons.OK, MessageBoxIcon.Warning)
+            Return
+        End If
+
+        Dim totalAmount As Integer
+        Integer.TryParse(Math.Floor(Convert.ToDecimal(txtTotal.Text)), totalAmount)
+
+        Try
+            con.Open()
+
+            ' Save to SUM table
+            Dim cmdSum As New SqlCommand("INSERT INTO sum (total, payment) VALUES (@total, @payment)", con)
+            cmdSum.Parameters.AddWithValue("@total", totalAmount)
+            cmdSum.Parameters.AddWithValue("@payment", 0)
+            cmdSum.ExecuteNonQuery()
+
+            ' Save order items
+            For Each row As DataRow In dtOrders.Rows
+                Dim cmdLookup As New SqlCommand("INSERT INTO lookup (id, productname, series, price, quantity, date, total) VALUES (@id, @productname, @series, @price, @quantity, @date, @total)", con)
+                cmdLookup.Parameters.AddWithValue("@id", row("id").ToString())
+                cmdLookup.Parameters.AddWithValue("@productname", row("productname").ToString())
+                cmdLookup.Parameters.AddWithValue("@series", row("series").ToString())
+                cmdLookup.Parameters.AddWithValue("@price", Convert.ToDecimal(row("price")))
+                cmdLookup.Parameters.AddWithValue("@quantity", Convert.ToInt32(row("quantity")))
+                cmdLookup.Parameters.AddWithValue("@date", Date.Today)
+                cmdLookup.Parameters.AddWithValue("@total", Convert.ToDecimal(row("total")))
+                cmdLookup.ExecuteNonQuery()
+            Next
+
+            MessageBox.Show("Transaction and products saved successfully.", "Saved", MessageBoxButtons.OK, MessageBoxIcon.Information)
+
+        Catch ex As Exception
+            MessageBox.Show("Error while saving to database: " & ex.Message, "DB Error", MessageBoxButtons.OK, MessageBoxIcon.Error)
+        Finally
+            con.Close()
+        End Try
+    End Sub
+
+    Private Sub Button3_Click(sender As Object, e As EventArgs) Handles Button3.Click
+        If dtOrders.Rows.Count = 0 Then
+            MessageBox.Show("Your cart is empty. Add items before proceeding to payment.", "Empty Cart", MessageBoxButtons.OK, MessageBoxIcon.Warning)
+            Return
+        End If
+
+        SaveTransaction()
+        NewTransaction()
+        PAYMENT.Show()
+        Me.Hide()
     End Sub
 
     Private Sub btnClose_Click(sender As Object, e As EventArgs) Handles btnClose.Click
         Application.Exit()
     End Sub
 
-    Private Sub UpdateCart(con As SqlConnection, productId As String, productName As String, series As String, quantity As Integer, totalPrice As Decimal)
-        Try
-            Using cmd As New SqlCommand("SELECT quantity, price FROM gshock.dbo.lookup WHERE id = @id", con)
-                cmd.Parameters.AddWithValue("@id", productId)
-
-                Using reader As SqlDataReader = cmd.ExecuteReader()
-                    If reader.Read() Then
-                        Dim existingQuantity As Integer = Convert.ToInt32(reader("quantity"))
-                        Dim existingPrice As Decimal = Convert.ToDecimal(reader("price"))
-                        reader.Close()
-
-                        Dim newQuantity As Integer = existingQuantity + quantity
-                        Dim newTotalPrice As Decimal = existingPrice + totalPrice
-
-                        Using updateCmd As New SqlCommand("UPDATE gshock.dbo.lookup SET quantity = @newQuantity, price = @newPrice, total = @newTotal, [date] = @date WHERE id = @id", con)
-                            updateCmd.Parameters.AddWithValue("@newQuantity", newQuantity)
-                            updateCmd.Parameters.AddWithValue("@newPrice", newTotalPrice)
-                            updateCmd.Parameters.AddWithValue("@newTotal", newTotalPrice) ' ✅ update total column
-                            updateCmd.Parameters.AddWithValue("@date", DateTime.Now)
-                            updateCmd.Parameters.AddWithValue("@id", productId)
-                            updateCmd.ExecuteNonQuery()
-                        End Using
-                    Else
-                        reader.Close()
-                        Using insertCmd As New SqlCommand("INSERT INTO gshock.dbo.lookup (id, productname, quantity, price, total, series, [date]) VALUES (@id, @productname, @quantity, @price, @total, @series, @date)", con)
-                            insertCmd.Parameters.AddWithValue("@id", productId)
-                            insertCmd.Parameters.AddWithValue("@productname", productName)
-                            insertCmd.Parameters.AddWithValue("@quantity", quantity)
-                            insertCmd.Parameters.AddWithValue("@price", totalPrice)
-                            insertCmd.Parameters.AddWithValue("@total", totalPrice) ' ✅ insert into total column
-                            insertCmd.Parameters.AddWithValue("@series", series)
-                            insertCmd.Parameters.AddWithValue("@date", DateTime.Now)
-                            insertCmd.ExecuteNonQuery()
-                        End Using
-                    End If
-                End Using
-            End Using
-        Catch ex As Exception
-            MessageBox.Show("Error updating cart: " & ex.Message)
-        End Try
-    End Sub
-
-
-    Private Sub Button3_Click(sender As Object, e As EventArgs) Handles Button3.Click
-        PAYMENT.Show()
-    End Sub
-
-    ' ✅ Search functionality using TextBox9 (product ID input)
-    Private Sub TextBox9_TextChanged(sender As Object, e As EventArgs) Handles TextBox9.TextChanged
-        Dim productId As String = TextBox9.Text.Trim()
-
-        If productId = "" Then
-            TextBox5.Clear()
-            TextBox6.Clear()
-            TextBox7.Clear()
-            TextBox8.Clear()
-            Return
-        End If
-
-        Try
-            Using con As New SqlConnection("Data Source=MS-SOPHIE;Integrated Security=True;Connect Timeout=30;Encrypt=True;TrustServerCertificate=True;ApplicationIntent=ReadWrite;MultiSubnetFailover=False")
-                con.Open()
-
-                Dim cmd As New SqlCommand("SELECT id, productname, series, price FROM gshock.dbo.products WHERE id = @id", con)
-                cmd.Parameters.AddWithValue("@id", productId)
-
-                Using reader As SqlDataReader = cmd.ExecuteReader()
-                    If reader.Read() Then
-                        TextBox5.Text = reader("id").ToString()
-                        TextBox6.Text = reader("productname").ToString()
-                        TextBox7.Text = reader("series").ToString()
-                        TextBox8.Text = Convert.ToDecimal(reader("price")).ToString("F2")
-                    Else
-                        TextBox5.Clear()
-                        TextBox6.Clear()
-                        TextBox7.Clear()
-                        TextBox8.Clear()
-                    End If
-                End Using
-            End Using
-        Catch ex As Exception
-            MessageBox.Show("Error searching product: " & ex.Message)
-        End Try
+    Private Sub Button4_Click(sender As Object, e As EventArgs) Handles Button4.Click
+        STARTUP.Show()
+        Me.Hide()
     End Sub
 End Class

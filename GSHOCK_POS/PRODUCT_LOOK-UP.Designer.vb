@@ -25,24 +25,19 @@ Partial Class PRODUCT_LOOK_UP
         Me.components = New System.ComponentModel.Container()
         Dim resources As System.ComponentModel.ComponentResourceManager = New System.ComponentModel.ComponentResourceManager(GetType(PRODUCT_LOOK_UP))
         Me.Label1 = New System.Windows.Forms.Label()
-        Me.TextBox1 = New System.Windows.Forms.TextBox()
-        Me.DataGridView1 = New System.Windows.Forms.DataGridView()
+        Me.txtQuantity = New System.Windows.Forms.TextBox()
+        Me.dgvProducts = New System.Windows.Forms.DataGridView()
         Me.ProductsBindingSource = New System.Windows.Forms.BindingSource(Me.components)
         Me.GshockDataSet = New GSHOCK_POS.gshockDataSet()
-        Me.Button1 = New System.Windows.Forms.Button()
         Me.Label2 = New System.Windows.Forms.Label()
-        Me.btnadd = New System.Windows.Forms.Button()
-        Me.TextBox2 = New System.Windows.Forms.TextBox()
+        Me.btnAdd = New System.Windows.Forms.Button()
+        Me.txtTotal = New System.Windows.Forms.TextBox()
         Me.Label3 = New System.Windows.Forms.Label()
-        Me.Label4 = New System.Windows.Forms.Label()
-        Me.TextBox3 = New System.Windows.Forms.TextBox()
-        Me.Label5 = New System.Windows.Forms.Label()
-        Me.TextBox4 = New System.Windows.Forms.TextBox()
-        Me.Button2 = New System.Windows.Forms.Button()
-        Me.TextBox5 = New System.Windows.Forms.TextBox()
-        Me.TextBox6 = New System.Windows.Forms.TextBox()
-        Me.TextBox7 = New System.Windows.Forms.TextBox()
-        Me.TextBox8 = New System.Windows.Forms.TextBox()
+        Me.btnNewTransaction = New System.Windows.Forms.Button()
+        Me.txtReference = New System.Windows.Forms.TextBox()
+        Me.txtProductName = New System.Windows.Forms.TextBox()
+        Me.txtSeries = New System.Windows.Forms.TextBox()
+        Me.txtPrice = New System.Windows.Forms.TextBox()
         Me.LookupBindingSource1 = New System.Windows.Forms.BindingSource(Me.components)
         Me.GshockDataSet2 = New GSHOCK_POS.gshockDataSet2()
         Me.LookupBindingSource = New System.Windows.Forms.BindingSource(Me.components)
@@ -51,30 +46,35 @@ Partial Class PRODUCT_LOOK_UP
         Me.Label7 = New System.Windows.Forms.Label()
         Me.Label8 = New System.Windows.Forms.Label()
         Me.Label9 = New System.Windows.Forms.Label()
-        Me.TextBox9 = New System.Windows.Forms.TextBox()
+        Me.txtSearch = New System.Windows.Forms.TextBox()
         Me.Label11 = New System.Windows.Forms.Label()
         Me.Label10 = New System.Windows.Forms.Label()
         Me.ProductsTableAdapter = New GSHOCK_POS.gshockDataSetTableAdapters.productsTableAdapter()
         Me.LookupTableAdapter = New GSHOCK_POS.gshockDataSet1TableAdapters.lookupTableAdapter()
         Me.LookupTableAdapter1 = New GSHOCK_POS.gshockDataSet2TableAdapters.lookupTableAdapter()
-        Me.DataGridView2 = New System.Windows.Forms.DataGridView()
+        Me.dgvOrders = New System.Windows.Forms.DataGridView()
         Me.LookupBindingSource2 = New System.Windows.Forms.BindingSource(Me.components)
         Me.GshockDataSet3 = New GSHOCK_POS.gshockDataSet3()
         Me.LookupTableAdapter2 = New GSHOCK_POS.gshockDataSet3TableAdapters.lookupTableAdapter()
         Me.Panel3 = New System.Windows.Forms.Panel()
+        Me.Button4 = New System.Windows.Forms.Button()
         Me.btnClose = New System.Windows.Forms.Button()
         Me.PictureBox1 = New System.Windows.Forms.PictureBox()
         Me.Label12 = New System.Windows.Forms.Label()
         Me.Label13 = New System.Windows.Forms.Label()
         Me.Button3 = New System.Windows.Forms.Button()
-        CType(Me.DataGridView1, System.ComponentModel.ISupportInitialize).BeginInit()
+        Me.cmbDiscountType = New System.Windows.Forms.ComboBox()
+        Me.txtDiscountID = New System.Windows.Forms.TextBox()
+        Me.lblDiscountID = New System.Windows.Forms.Label()
+        Me.Label5 = New System.Windows.Forms.Label()
+        CType(Me.dgvProducts, System.ComponentModel.ISupportInitialize).BeginInit()
         CType(Me.ProductsBindingSource, System.ComponentModel.ISupportInitialize).BeginInit()
         CType(Me.GshockDataSet, System.ComponentModel.ISupportInitialize).BeginInit()
         CType(Me.LookupBindingSource1, System.ComponentModel.ISupportInitialize).BeginInit()
         CType(Me.GshockDataSet2, System.ComponentModel.ISupportInitialize).BeginInit()
         CType(Me.LookupBindingSource, System.ComponentModel.ISupportInitialize).BeginInit()
         CType(Me.GshockDataSet1, System.ComponentModel.ISupportInitialize).BeginInit()
-        CType(Me.DataGridView2, System.ComponentModel.ISupportInitialize).BeginInit()
+        CType(Me.dgvOrders, System.ComponentModel.ISupportInitialize).BeginInit()
         CType(Me.LookupBindingSource2, System.ComponentModel.ISupportInitialize).BeginInit()
         CType(Me.GshockDataSet3, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.Panel3.SuspendLayout()
@@ -94,28 +94,28 @@ Partial Class PRODUCT_LOOK_UP
         Me.Label1.TabIndex = 0
         Me.Label1.Text = "PRODUCT LOOK-UP"
         '
-        'TextBox1
+        'txtQuantity
         '
-        Me.TextBox1.BackColor = System.Drawing.SystemColors.HighlightText
-        Me.TextBox1.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle
-        Me.TextBox1.Font = New System.Drawing.Font("Arial Narrow", 12.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.TextBox1.ForeColor = System.Drawing.Color.Gray
-        Me.TextBox1.Location = New System.Drawing.Point(219, 638)
-        Me.TextBox1.Margin = New System.Windows.Forms.Padding(2)
-        Me.TextBox1.Name = "TextBox1"
-        Me.TextBox1.Size = New System.Drawing.Size(116, 26)
-        Me.TextBox1.TabIndex = 1
+        Me.txtQuantity.BackColor = System.Drawing.SystemColors.HighlightText
+        Me.txtQuantity.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle
+        Me.txtQuantity.Font = New System.Drawing.Font("Arial Narrow", 12.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.txtQuantity.ForeColor = System.Drawing.Color.Gray
+        Me.txtQuantity.Location = New System.Drawing.Point(171, 422)
+        Me.txtQuantity.Margin = New System.Windows.Forms.Padding(2)
+        Me.txtQuantity.Name = "txtQuantity"
+        Me.txtQuantity.Size = New System.Drawing.Size(246, 26)
+        Me.txtQuantity.TabIndex = 1
         '
-        'DataGridView1
+        'dgvProducts
         '
-        Me.DataGridView1.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize
-        Me.DataGridView1.Location = New System.Drawing.Point(520, 236)
-        Me.DataGridView1.Margin = New System.Windows.Forms.Padding(2)
-        Me.DataGridView1.Name = "DataGridView1"
-        Me.DataGridView1.RowHeadersWidth = 51
-        Me.DataGridView1.RowTemplate.Height = 24
-        Me.DataGridView1.Size = New System.Drawing.Size(801, 184)
-        Me.DataGridView1.TabIndex = 2
+        Me.dgvProducts.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize
+        Me.dgvProducts.Location = New System.Drawing.Point(520, 236)
+        Me.dgvProducts.Margin = New System.Windows.Forms.Padding(2)
+        Me.dgvProducts.Name = "dgvProducts"
+        Me.dgvProducts.RowHeadersWidth = 51
+        Me.dgvProducts.RowTemplate.Height = 24
+        Me.dgvProducts.Size = New System.Drawing.Size(801, 184)
+        Me.dgvProducts.TabIndex = 2
         '
         'ProductsBindingSource
         '
@@ -127,51 +127,41 @@ Partial Class PRODUCT_LOOK_UP
         Me.GshockDataSet.DataSetName = "gshockDataSet"
         Me.GshockDataSet.SchemaSerializationMode = System.Data.SchemaSerializationMode.IncludeSchema
         '
-        'Button1
-        '
-        Me.Button1.Font = New System.Drawing.Font("Arial Narrow", 10.2!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.Button1.Location = New System.Drawing.Point(487, 724)
-        Me.Button1.Margin = New System.Windows.Forms.Padding(2)
-        Me.Button1.Name = "Button1"
-        Me.Button1.Size = New System.Drawing.Size(82, 26)
-        Me.Button1.TabIndex = 3
-        Me.Button1.Text = "PROCEED"
-        Me.Button1.UseVisualStyleBackColor = True
-        '
         'Label2
         '
         Me.Label2.AutoSize = True
         Me.Label2.BackColor = System.Drawing.Color.Transparent
         Me.Label2.Font = New System.Drawing.Font("Arial", 12.0!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.Label2.ForeColor = System.Drawing.SystemColors.ButtonHighlight
-        Me.Label2.Location = New System.Drawing.Point(137, 643)
+        Me.Label2.Location = New System.Drawing.Point(48, 429)
         Me.Label2.Margin = New System.Windows.Forms.Padding(2, 0, 2, 0)
         Me.Label2.Name = "Label2"
         Me.Label2.Size = New System.Drawing.Size(79, 19)
         Me.Label2.TabIndex = 4
         Me.Label2.Text = "Quantity:"
         '
-        'btnadd
+        'btnAdd
         '
-        Me.btnadd.Location = New System.Drawing.Point(248, 680)
-        Me.btnadd.Margin = New System.Windows.Forms.Padding(2)
-        Me.btnadd.Name = "btnadd"
-        Me.btnadd.Size = New System.Drawing.Size(56, 19)
-        Me.btnadd.TabIndex = 5
-        Me.btnadd.Text = "ADD"
-        Me.btnadd.UseVisualStyleBackColor = True
+        Me.btnAdd.Location = New System.Drawing.Point(260, 483)
+        Me.btnAdd.Margin = New System.Windows.Forms.Padding(2)
+        Me.btnAdd.Name = "btnAdd"
+        Me.btnAdd.Size = New System.Drawing.Size(56, 19)
+        Me.btnAdd.TabIndex = 5
+        Me.btnAdd.Text = "ADD"
+        Me.btnAdd.UseVisualStyleBackColor = True
         '
-        'TextBox2
+        'txtTotal
         '
-        Me.TextBox2.BackColor = System.Drawing.SystemColors.HighlightText
-        Me.TextBox2.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle
-        Me.TextBox2.Font = New System.Drawing.Font("Arial Narrow", 12.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.TextBox2.ForeColor = System.Drawing.Color.Gray
-        Me.TextBox2.Location = New System.Drawing.Point(471, 638)
-        Me.TextBox2.Margin = New System.Windows.Forms.Padding(2)
-        Me.TextBox2.Name = "TextBox2"
-        Me.TextBox2.Size = New System.Drawing.Size(170, 26)
-        Me.TextBox2.TabIndex = 6
+        Me.txtTotal.BackColor = System.Drawing.SystemColors.HighlightText
+        Me.txtTotal.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle
+        Me.txtTotal.Enabled = False
+        Me.txtTotal.Font = New System.Drawing.Font("Arial Narrow", 12.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.txtTotal.ForeColor = System.Drawing.Color.Gray
+        Me.txtTotal.Location = New System.Drawing.Point(205, 609)
+        Me.txtTotal.Margin = New System.Windows.Forms.Padding(2)
+        Me.txtTotal.Name = "txtTotal"
+        Me.txtTotal.Size = New System.Drawing.Size(170, 26)
+        Me.txtTotal.TabIndex = 6
         '
         'Label3
         '
@@ -179,121 +169,75 @@ Partial Class PRODUCT_LOOK_UP
         Me.Label3.BackColor = System.Drawing.Color.Transparent
         Me.Label3.Font = New System.Drawing.Font("Arial", 12.0!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.Label3.ForeColor = System.Drawing.SystemColors.ButtonHighlight
-        Me.Label3.Location = New System.Drawing.Point(365, 643)
+        Me.Label3.Location = New System.Drawing.Point(99, 614)
         Me.Label3.Margin = New System.Windows.Forms.Padding(2, 0, 2, 0)
         Me.Label3.Name = "Label3"
         Me.Label3.Size = New System.Drawing.Size(52, 19)
         Me.Label3.TabIndex = 7
         Me.Label3.Text = "Total:"
         '
-        'Label4
+        'btnNewTransaction
         '
-        Me.Label4.AutoSize = True
-        Me.Label4.BackColor = System.Drawing.Color.Transparent
-        Me.Label4.Font = New System.Drawing.Font("Arial", 12.0!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.Label4.ForeColor = System.Drawing.SystemColors.ButtonHighlight
-        Me.Label4.Location = New System.Drawing.Point(365, 677)
-        Me.Label4.Margin = New System.Windows.Forms.Padding(2, 0, 2, 0)
-        Me.Label4.Name = "Label4"
-        Me.Label4.Size = New System.Drawing.Size(82, 19)
-        Me.Label4.TabIndex = 8
-        Me.Label4.Text = "Payment:"
+        Me.btnNewTransaction.Font = New System.Drawing.Font("Arial Narrow", 10.2!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.btnNewTransaction.Location = New System.Drawing.Point(885, 701)
+        Me.btnNewTransaction.Margin = New System.Windows.Forms.Padding(2)
+        Me.btnNewTransaction.Name = "btnNewTransaction"
+        Me.btnNewTransaction.Size = New System.Drawing.Size(194, 26)
+        Me.btnNewTransaction.TabIndex = 12
+        Me.btnNewTransaction.Text = "NEW TRANSACTION"
+        Me.btnNewTransaction.UseVisualStyleBackColor = True
         '
-        'TextBox3
+        'txtReference
         '
-        Me.TextBox3.BackColor = System.Drawing.SystemColors.HighlightText
-        Me.TextBox3.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle
-        Me.TextBox3.Font = New System.Drawing.Font("Arial Narrow", 12.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.TextBox3.ForeColor = System.Drawing.Color.Gray
-        Me.TextBox3.Location = New System.Drawing.Point(471, 676)
-        Me.TextBox3.Margin = New System.Windows.Forms.Padding(2)
-        Me.TextBox3.Name = "TextBox3"
-        Me.TextBox3.Size = New System.Drawing.Size(170, 26)
-        Me.TextBox3.TabIndex = 9
+        Me.txtReference.BackColor = System.Drawing.SystemColors.HighlightText
+        Me.txtReference.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle
+        Me.txtReference.Enabled = False
+        Me.txtReference.Font = New System.Drawing.Font("Arial Narrow", 12.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.txtReference.ForeColor = System.Drawing.Color.Gray
+        Me.txtReference.Location = New System.Drawing.Point(171, 206)
+        Me.txtReference.Margin = New System.Windows.Forms.Padding(2)
+        Me.txtReference.Name = "txtReference"
+        Me.txtReference.Size = New System.Drawing.Size(246, 26)
+        Me.txtReference.TabIndex = 13
         '
-        'Label5
+        'txtProductName
         '
-        Me.Label5.AutoSize = True
-        Me.Label5.BackColor = System.Drawing.Color.Transparent
-        Me.Label5.Font = New System.Drawing.Font("Arial", 12.0!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.Label5.ForeColor = System.Drawing.SystemColors.ButtonHighlight
-        Me.Label5.Location = New System.Drawing.Point(705, 643)
-        Me.Label5.Margin = New System.Windows.Forms.Padding(2, 0, 2, 0)
-        Me.Label5.Name = "Label5"
-        Me.Label5.Size = New System.Drawing.Size(75, 19)
-        Me.Label5.TabIndex = 10
-        Me.Label5.Text = "Change:"
+        Me.txtProductName.BackColor = System.Drawing.SystemColors.HighlightText
+        Me.txtProductName.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle
+        Me.txtProductName.Enabled = False
+        Me.txtProductName.Font = New System.Drawing.Font("Arial Narrow", 12.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.txtProductName.ForeColor = System.Drawing.Color.Gray
+        Me.txtProductName.Location = New System.Drawing.Point(171, 255)
+        Me.txtProductName.Margin = New System.Windows.Forms.Padding(2)
+        Me.txtProductName.Name = "txtProductName"
+        Me.txtProductName.Size = New System.Drawing.Size(246, 26)
+        Me.txtProductName.TabIndex = 14
         '
-        'TextBox4
+        'txtSeries
         '
-        Me.TextBox4.BackColor = System.Drawing.SystemColors.HighlightText
-        Me.TextBox4.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle
-        Me.TextBox4.Font = New System.Drawing.Font("Arial Narrow", 12.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.TextBox4.ForeColor = System.Drawing.Color.Gray
-        Me.TextBox4.Location = New System.Drawing.Point(803, 638)
-        Me.TextBox4.Margin = New System.Windows.Forms.Padding(2)
-        Me.TextBox4.Name = "TextBox4"
-        Me.TextBox4.Size = New System.Drawing.Size(195, 26)
-        Me.TextBox4.TabIndex = 11
+        Me.txtSeries.BackColor = System.Drawing.SystemColors.HighlightText
+        Me.txtSeries.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle
+        Me.txtSeries.Enabled = False
+        Me.txtSeries.Font = New System.Drawing.Font("Arial Narrow", 12.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.txtSeries.ForeColor = System.Drawing.Color.Gray
+        Me.txtSeries.Location = New System.Drawing.Point(171, 309)
+        Me.txtSeries.Margin = New System.Windows.Forms.Padding(2)
+        Me.txtSeries.Name = "txtSeries"
+        Me.txtSeries.Size = New System.Drawing.Size(246, 26)
+        Me.txtSeries.TabIndex = 15
         '
-        'Button2
+        'txtPrice
         '
-        Me.Button2.Font = New System.Drawing.Font("Arial Narrow", 10.2!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.Button2.Location = New System.Drawing.Point(804, 711)
-        Me.Button2.Margin = New System.Windows.Forms.Padding(2)
-        Me.Button2.Name = "Button2"
-        Me.Button2.Size = New System.Drawing.Size(194, 26)
-        Me.Button2.TabIndex = 12
-        Me.Button2.Text = "NEW TRANSACTION"
-        Me.Button2.UseVisualStyleBackColor = True
-        '
-        'TextBox5
-        '
-        Me.TextBox5.BackColor = System.Drawing.SystemColors.HighlightText
-        Me.TextBox5.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle
-        Me.TextBox5.Font = New System.Drawing.Font("Arial Narrow", 12.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.TextBox5.ForeColor = System.Drawing.Color.Gray
-        Me.TextBox5.Location = New System.Drawing.Point(171, 206)
-        Me.TextBox5.Margin = New System.Windows.Forms.Padding(2)
-        Me.TextBox5.Name = "TextBox5"
-        Me.TextBox5.Size = New System.Drawing.Size(246, 26)
-        Me.TextBox5.TabIndex = 13
-        '
-        'TextBox6
-        '
-        Me.TextBox6.BackColor = System.Drawing.SystemColors.HighlightText
-        Me.TextBox6.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle
-        Me.TextBox6.Font = New System.Drawing.Font("Arial Narrow", 12.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.TextBox6.ForeColor = System.Drawing.Color.Gray
-        Me.TextBox6.Location = New System.Drawing.Point(171, 255)
-        Me.TextBox6.Margin = New System.Windows.Forms.Padding(2)
-        Me.TextBox6.Name = "TextBox6"
-        Me.TextBox6.Size = New System.Drawing.Size(246, 26)
-        Me.TextBox6.TabIndex = 14
-        '
-        'TextBox7
-        '
-        Me.TextBox7.BackColor = System.Drawing.SystemColors.HighlightText
-        Me.TextBox7.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle
-        Me.TextBox7.Font = New System.Drawing.Font("Arial Narrow", 12.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.TextBox7.ForeColor = System.Drawing.Color.Gray
-        Me.TextBox7.Location = New System.Drawing.Point(171, 309)
-        Me.TextBox7.Margin = New System.Windows.Forms.Padding(2)
-        Me.TextBox7.Name = "TextBox7"
-        Me.TextBox7.Size = New System.Drawing.Size(246, 26)
-        Me.TextBox7.TabIndex = 15
-        '
-        'TextBox8
-        '
-        Me.TextBox8.BackColor = System.Drawing.SystemColors.HighlightText
-        Me.TextBox8.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle
-        Me.TextBox8.Font = New System.Drawing.Font("Arial Narrow", 12.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.TextBox8.ForeColor = System.Drawing.Color.Gray
-        Me.TextBox8.Location = New System.Drawing.Point(171, 365)
-        Me.TextBox8.Margin = New System.Windows.Forms.Padding(2)
-        Me.TextBox8.Name = "TextBox8"
-        Me.TextBox8.Size = New System.Drawing.Size(246, 26)
-        Me.TextBox8.TabIndex = 16
+        Me.txtPrice.BackColor = System.Drawing.SystemColors.HighlightText
+        Me.txtPrice.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle
+        Me.txtPrice.Enabled = False
+        Me.txtPrice.Font = New System.Drawing.Font("Arial Narrow", 12.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.txtPrice.ForeColor = System.Drawing.Color.Gray
+        Me.txtPrice.Location = New System.Drawing.Point(171, 365)
+        Me.txtPrice.Margin = New System.Windows.Forms.Padding(2)
+        Me.txtPrice.Name = "txtPrice"
+        Me.txtPrice.Size = New System.Drawing.Size(246, 26)
+        Me.txtPrice.TabIndex = 16
         '
         'LookupBindingSource1
         '
@@ -367,17 +311,17 @@ Partial Class PRODUCT_LOOK_UP
         Me.Label9.TabIndex = 21
         Me.Label9.Text = "Price:"
         '
-        'TextBox9
+        'txtSearch
         '
-        Me.TextBox9.BackColor = System.Drawing.SystemColors.HighlightText
-        Me.TextBox9.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle
-        Me.TextBox9.Font = New System.Drawing.Font("Arial Narrow", 12.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.TextBox9.ForeColor = System.Drawing.Color.Black
-        Me.TextBox9.Location = New System.Drawing.Point(689, 157)
-        Me.TextBox9.Margin = New System.Windows.Forms.Padding(2)
-        Me.TextBox9.Name = "TextBox9"
-        Me.TextBox9.Size = New System.Drawing.Size(326, 26)
-        Me.TextBox9.TabIndex = 22
+        Me.txtSearch.BackColor = System.Drawing.SystemColors.HighlightText
+        Me.txtSearch.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle
+        Me.txtSearch.Font = New System.Drawing.Font("Arial Narrow", 12.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.txtSearch.ForeColor = System.Drawing.Color.Black
+        Me.txtSearch.Location = New System.Drawing.Point(689, 157)
+        Me.txtSearch.Margin = New System.Windows.Forms.Padding(2)
+        Me.txtSearch.Name = "txtSearch"
+        Me.txtSearch.Size = New System.Drawing.Size(326, 26)
+        Me.txtSearch.TabIndex = 22
         '
         'Label11
         '
@@ -417,13 +361,13 @@ Partial Class PRODUCT_LOOK_UP
         '
         Me.LookupTableAdapter1.ClearBeforeFill = True
         '
-        'DataGridView2
+        'dgvOrders
         '
-        Me.DataGridView2.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize
-        Me.DataGridView2.Location = New System.Drawing.Point(520, 470)
-        Me.DataGridView2.Name = "DataGridView2"
-        Me.DataGridView2.Size = New System.Drawing.Size(801, 150)
-        Me.DataGridView2.TabIndex = 27
+        Me.dgvOrders.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize
+        Me.dgvOrders.Location = New System.Drawing.Point(520, 470)
+        Me.dgvOrders.Name = "dgvOrders"
+        Me.dgvOrders.Size = New System.Drawing.Size(801, 150)
+        Me.dgvOrders.TabIndex = 27
         '
         'LookupBindingSource2
         '
@@ -442,6 +386,7 @@ Partial Class PRODUCT_LOOK_UP
         'Panel3
         '
         Me.Panel3.BackColor = System.Drawing.SystemColors.ActiveCaptionText
+        Me.Panel3.Controls.Add(Me.Button4)
         Me.Panel3.Controls.Add(Me.btnClose)
         Me.Panel3.Controls.Add(Me.PictureBox1)
         Me.Panel3.Dock = System.Windows.Forms.DockStyle.Top
@@ -449,6 +394,17 @@ Partial Class PRODUCT_LOOK_UP
         Me.Panel3.Name = "Panel3"
         Me.Panel3.Size = New System.Drawing.Size(1386, 47)
         Me.Panel3.TabIndex = 28
+        '
+        'Button4
+        '
+        Me.Button4.FlatStyle = System.Windows.Forms.FlatStyle.Flat
+        Me.Button4.ForeColor = System.Drawing.Color.Red
+        Me.Button4.Location = New System.Drawing.Point(1181, 13)
+        Me.Button4.Name = "Button4"
+        Me.Button4.Size = New System.Drawing.Size(75, 23)
+        Me.Button4.TabIndex = 37
+        Me.Button4.Text = "Logout"
+        Me.Button4.UseVisualStyleBackColor = True
         '
         'btnClose
         '
@@ -505,7 +461,7 @@ Partial Class PRODUCT_LOOK_UP
         'Button3
         '
         Me.Button3.Font = New System.Drawing.Font("Arial Narrow", 10.2!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.Button3.Location = New System.Drawing.Point(803, 675)
+        Me.Button3.Location = New System.Drawing.Point(884, 642)
         Me.Button3.Margin = New System.Windows.Forms.Padding(2)
         Me.Button3.Name = "Button3"
         Me.Button3.Size = New System.Drawing.Size(195, 26)
@@ -513,54 +469,95 @@ Partial Class PRODUCT_LOOK_UP
         Me.Button3.Text = "PROCEED TO PAYMENT"
         Me.Button3.UseVisualStyleBackColor = True
         '
+        'cmbDiscountType
+        '
+        Me.cmbDiscountType.FormattingEnabled = True
+        Me.cmbDiscountType.Location = New System.Drawing.Point(205, 533)
+        Me.cmbDiscountType.Name = "cmbDiscountType"
+        Me.cmbDiscountType.Size = New System.Drawing.Size(170, 21)
+        Me.cmbDiscountType.TabIndex = 33
+        '
+        'txtDiscountID
+        '
+        Me.txtDiscountID.Location = New System.Drawing.Point(205, 560)
+        Me.txtDiscountID.MaxLength = 6
+        Me.txtDiscountID.Name = "txtDiscountID"
+        Me.txtDiscountID.Size = New System.Drawing.Size(170, 20)
+        Me.txtDiscountID.TabIndex = 34
+        '
+        'lblDiscountID
+        '
+        Me.lblDiscountID.AutoSize = True
+        Me.lblDiscountID.BackColor = System.Drawing.Color.Transparent
+        Me.lblDiscountID.Font = New System.Drawing.Font("Arial", 12.0!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.lblDiscountID.ForeColor = System.Drawing.SystemColors.ButtonHighlight
+        Me.lblDiscountID.Location = New System.Drawing.Point(71, 559)
+        Me.lblDiscountID.Margin = New System.Windows.Forms.Padding(2, 0, 2, 0)
+        Me.lblDiscountID.Name = "lblDiscountID"
+        Me.lblDiscountID.Size = New System.Drawing.Size(102, 19)
+        Me.lblDiscountID.TabIndex = 35
+        Me.lblDiscountID.Text = "Id Discount:"
+        '
+        'Label5
+        '
+        Me.Label5.AutoSize = True
+        Me.Label5.BackColor = System.Drawing.Color.Transparent
+        Me.Label5.Font = New System.Drawing.Font("Arial", 12.0!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.Label5.ForeColor = System.Drawing.SystemColors.ButtonHighlight
+        Me.Label5.Location = New System.Drawing.Point(29, 533)
+        Me.Label5.Margin = New System.Windows.Forms.Padding(2, 0, 2, 0)
+        Me.Label5.Name = "Label5"
+        Me.Label5.Size = New System.Drawing.Size(144, 19)
+        Me.Label5.TabIndex = 36
+        Me.Label5.Text = "Special Discount:"
+        '
         'PRODUCT_LOOK_UP
         '
         Me.AutoScaleDimensions = New System.Drawing.SizeF(6.0!, 13.0!)
         Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font
-        Me.BackgroundImage = CType(resources.GetObject("$this.BackgroundImage"), System.Drawing.Image)
+        Me.BackgroundImage = Global.GSHOCK_POS.My.Resources.Resources.IMG_7086
         Me.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch
         Me.ClientSize = New System.Drawing.Size(1386, 788)
+        Me.Controls.Add(Me.Label5)
+        Me.Controls.Add(Me.lblDiscountID)
+        Me.Controls.Add(Me.txtDiscountID)
+        Me.Controls.Add(Me.cmbDiscountType)
         Me.Controls.Add(Me.Button3)
         Me.Controls.Add(Me.Label13)
         Me.Controls.Add(Me.Label12)
         Me.Controls.Add(Me.Panel3)
-        Me.Controls.Add(Me.DataGridView2)
+        Me.Controls.Add(Me.dgvOrders)
         Me.Controls.Add(Me.Label10)
         Me.Controls.Add(Me.Label11)
-        Me.Controls.Add(Me.TextBox9)
+        Me.Controls.Add(Me.txtSearch)
         Me.Controls.Add(Me.Label9)
         Me.Controls.Add(Me.Label8)
         Me.Controls.Add(Me.Label7)
         Me.Controls.Add(Me.Label6)
-        Me.Controls.Add(Me.TextBox8)
-        Me.Controls.Add(Me.TextBox7)
-        Me.Controls.Add(Me.TextBox6)
-        Me.Controls.Add(Me.TextBox5)
-        Me.Controls.Add(Me.Button2)
-        Me.Controls.Add(Me.TextBox4)
-        Me.Controls.Add(Me.Label5)
-        Me.Controls.Add(Me.TextBox3)
-        Me.Controls.Add(Me.Label4)
+        Me.Controls.Add(Me.txtPrice)
+        Me.Controls.Add(Me.txtSeries)
+        Me.Controls.Add(Me.txtProductName)
+        Me.Controls.Add(Me.txtReference)
+        Me.Controls.Add(Me.btnNewTransaction)
         Me.Controls.Add(Me.Label3)
-        Me.Controls.Add(Me.TextBox2)
-        Me.Controls.Add(Me.btnadd)
+        Me.Controls.Add(Me.txtTotal)
+        Me.Controls.Add(Me.btnAdd)
         Me.Controls.Add(Me.Label2)
-        Me.Controls.Add(Me.Button1)
-        Me.Controls.Add(Me.DataGridView1)
-        Me.Controls.Add(Me.TextBox1)
+        Me.Controls.Add(Me.dgvProducts)
+        Me.Controls.Add(Me.txtQuantity)
         Me.Controls.Add(Me.Label1)
         Me.FormBorderStyle = System.Windows.Forms.FormBorderStyle.None
         Me.Margin = New System.Windows.Forms.Padding(2)
         Me.Name = "PRODUCT_LOOK_UP"
         Me.Text = "PRODUCT_LOOK_UP"
-        CType(Me.DataGridView1, System.ComponentModel.ISupportInitialize).EndInit()
+        CType(Me.dgvProducts, System.ComponentModel.ISupportInitialize).EndInit()
         CType(Me.ProductsBindingSource, System.ComponentModel.ISupportInitialize).EndInit()
         CType(Me.GshockDataSet, System.ComponentModel.ISupportInitialize).EndInit()
         CType(Me.LookupBindingSource1, System.ComponentModel.ISupportInitialize).EndInit()
         CType(Me.GshockDataSet2, System.ComponentModel.ISupportInitialize).EndInit()
         CType(Me.LookupBindingSource, System.ComponentModel.ISupportInitialize).EndInit()
         CType(Me.GshockDataSet1, System.ComponentModel.ISupportInitialize).EndInit()
-        CType(Me.DataGridView2, System.ComponentModel.ISupportInitialize).EndInit()
+        CType(Me.dgvOrders, System.ComponentModel.ISupportInitialize).EndInit()
         CType(Me.LookupBindingSource2, System.ComponentModel.ISupportInitialize).EndInit()
         CType(Me.GshockDataSet3, System.ComponentModel.ISupportInitialize).EndInit()
         Me.Panel3.ResumeLayout(False)
@@ -571,27 +568,22 @@ Partial Class PRODUCT_LOOK_UP
     End Sub
 
     Friend WithEvents Label1 As Label
-    Friend WithEvents TextBox1 As TextBox
-    Friend WithEvents DataGridView1 As DataGridView
-    Friend WithEvents Button1 As Button
+    Friend WithEvents txtQuantity As TextBox
+    Friend WithEvents dgvProducts As DataGridView
     Friend WithEvents Label2 As Label
-    Friend WithEvents btnadd As Button
-    Friend WithEvents TextBox2 As TextBox
+    Friend WithEvents btnAdd As Button
+    Friend WithEvents txtTotal As TextBox
     Friend WithEvents Label3 As Label
-    Friend WithEvents Label4 As Label
-    Friend WithEvents TextBox3 As TextBox
-    Friend WithEvents Label5 As Label
-    Friend WithEvents TextBox4 As TextBox
-    Friend WithEvents Button2 As Button
-    Friend WithEvents TextBox5 As TextBox
-    Friend WithEvents TextBox6 As TextBox
-    Friend WithEvents TextBox7 As TextBox
-    Friend WithEvents TextBox8 As TextBox
+    Friend WithEvents btnNewTransaction As Button
+    Friend WithEvents txtReference As TextBox
+    Friend WithEvents txtProductName As TextBox
+    Friend WithEvents txtSeries As TextBox
+    Friend WithEvents txtPrice As TextBox
     Friend WithEvents Label6 As Label
     Friend WithEvents Label7 As Label
     Friend WithEvents Label8 As Label
     Friend WithEvents Label9 As Label
-    Friend WithEvents TextBox9 As TextBox
+    Friend WithEvents txtSearch As TextBox
     Friend WithEvents Label11 As Label
     Friend WithEvents Label10 As Label
     Friend WithEvents GshockDataSet As gshockDataSet
@@ -603,7 +595,7 @@ Partial Class PRODUCT_LOOK_UP
     Friend WithEvents GshockDataSet2 As gshockDataSet2
     Friend WithEvents LookupBindingSource1 As BindingSource
     Friend WithEvents LookupTableAdapter1 As gshockDataSet2TableAdapters.lookupTableAdapter
-    Friend WithEvents DataGridView2 As DataGridView
+    Friend WithEvents dgvOrders As DataGridView
     Friend WithEvents GshockDataSet3 As gshockDataSet3
     Friend WithEvents LookupBindingSource2 As BindingSource
     Friend WithEvents LookupTableAdapter2 As gshockDataSet3TableAdapters.lookupTableAdapter
@@ -613,4 +605,9 @@ Partial Class PRODUCT_LOOK_UP
     Friend WithEvents Label12 As Label
     Friend WithEvents Label13 As Label
     Friend WithEvents Button3 As Button
+    Friend WithEvents cmbDiscountType As ComboBox
+    Friend WithEvents txtDiscountID As TextBox
+    Friend WithEvents lblDiscountID As Label
+    Friend WithEvents Label5 As Label
+    Friend WithEvents Button4 As Button
 End Class

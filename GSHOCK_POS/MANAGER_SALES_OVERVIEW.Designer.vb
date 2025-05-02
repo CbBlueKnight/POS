@@ -24,15 +24,19 @@ Partial Class MANAGER_SALES_OVERVIEW
     Private Sub InitializeComponent()
         Dim resources As System.ComponentModel.ComponentResourceManager = New System.ComponentModel.ComponentResourceManager(GetType(MANAGER_SALES_OVERVIEW))
         Me.Panel3 = New System.Windows.Forms.Panel()
+        Me.Button4 = New System.Windows.Forms.Button()
         Me.btnClose = New System.Windows.Forms.Button()
         Me.PictureBox1 = New System.Windows.Forms.PictureBox()
         Me.Label2 = New System.Windows.Forms.Label()
         Me.Label1 = New System.Windows.Forms.Label()
         Me.Panel1 = New System.Windows.Forms.Panel()
+        Me.Button2 = New System.Windows.Forms.Button()
+        Me.Button1 = New System.Windows.Forms.Button()
         Me.MONTHLY = New System.Windows.Forms.Button()
         Me.WEEKLY = New System.Windows.Forms.Button()
         Me.DAILY = New System.Windows.Forms.Button()
         Me.Panel2 = New System.Windows.Forms.Panel()
+        Me.Button3 = New System.Windows.Forms.Button()
         Me.C3 = New System.Windows.Forms.Button()
         Me.C2 = New System.Windows.Forms.Button()
         Me.C1 = New System.Windows.Forms.Button()
@@ -45,6 +49,7 @@ Partial Class MANAGER_SALES_OVERVIEW
         'Panel3
         '
         Me.Panel3.BackColor = System.Drawing.SystemColors.ActiveCaptionText
+        Me.Panel3.Controls.Add(Me.Button4)
         Me.Panel3.Controls.Add(Me.btnClose)
         Me.Panel3.Controls.Add(Me.PictureBox1)
         Me.Panel3.Dock = System.Windows.Forms.DockStyle.Top
@@ -52,6 +57,17 @@ Partial Class MANAGER_SALES_OVERVIEW
         Me.Panel3.Name = "Panel3"
         Me.Panel3.Size = New System.Drawing.Size(1386, 47)
         Me.Panel3.TabIndex = 25
+        '
+        'Button4
+        '
+        Me.Button4.FlatStyle = System.Windows.Forms.FlatStyle.Flat
+        Me.Button4.ForeColor = System.Drawing.Color.Red
+        Me.Button4.Location = New System.Drawing.Point(1170, 12)
+        Me.Button4.Name = "Button4"
+        Me.Button4.Size = New System.Drawing.Size(75, 23)
+        Me.Button4.TabIndex = 32
+        Me.Button4.Text = "Logout"
+        Me.Button4.UseVisualStyleBackColor = True
         '
         'btnClose
         '
@@ -106,6 +122,8 @@ Partial Class MANAGER_SALES_OVERVIEW
         'Panel1
         '
         Me.Panel1.BackColor = System.Drawing.SystemColors.ButtonShadow
+        Me.Panel1.Controls.Add(Me.Button2)
+        Me.Panel1.Controls.Add(Me.Button1)
         Me.Panel1.Controls.Add(Me.MONTHLY)
         Me.Panel1.Controls.Add(Me.WEEKLY)
         Me.Panel1.Controls.Add(Me.DAILY)
@@ -114,6 +132,26 @@ Partial Class MANAGER_SALES_OVERVIEW
         Me.Panel1.Name = "Panel1"
         Me.Panel1.Size = New System.Drawing.Size(180, 741)
         Me.Panel1.TabIndex = 28
+        '
+        'Button2
+        '
+        Me.Button2.Font = New System.Drawing.Font("Arial", 9.75!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.Button2.Location = New System.Drawing.Point(3, 399)
+        Me.Button2.Name = "Button2"
+        Me.Button2.Size = New System.Drawing.Size(174, 45)
+        Me.Button2.TabIndex = 4
+        Me.Button2.Text = "Add Promo to Web"
+        Me.Button2.UseVisualStyleBackColor = True
+        '
+        'Button1
+        '
+        Me.Button1.Font = New System.Drawing.Font("Arial", 9.75!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.Button1.Location = New System.Drawing.Point(3, 348)
+        Me.Button1.Name = "Button1"
+        Me.Button1.Size = New System.Drawing.Size(174, 45)
+        Me.Button1.TabIndex = 3
+        Me.Button1.Text = "Add Product to Web"
+        Me.Button1.UseVisualStyleBackColor = True
         '
         'MONTHLY
         '
@@ -148,6 +186,7 @@ Partial Class MANAGER_SALES_OVERVIEW
         'Panel2
         '
         Me.Panel2.BackColor = System.Drawing.SystemColors.ButtonShadow
+        Me.Panel2.Controls.Add(Me.Button3)
         Me.Panel2.Controls.Add(Me.C3)
         Me.Panel2.Controls.Add(Me.C2)
         Me.Panel2.Controls.Add(Me.C1)
@@ -156,6 +195,16 @@ Partial Class MANAGER_SALES_OVERVIEW
         Me.Panel2.Name = "Panel2"
         Me.Panel2.Size = New System.Drawing.Size(180, 741)
         Me.Panel2.TabIndex = 29
+        '
+        'Button3
+        '
+        Me.Button3.Font = New System.Drawing.Font("Arial", 9.75!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.Button3.Location = New System.Drawing.Point(3, 348)
+        Me.Button3.Name = "Button3"
+        Me.Button3.Size = New System.Drawing.Size(174, 45)
+        Me.Button3.TabIndex = 5
+        Me.Button3.Text = "Add Users"
+        Me.Button3.UseVisualStyleBackColor = True
         '
         'C3
         '
@@ -224,4 +273,8 @@ Partial Class MANAGER_SALES_OVERVIEW
     Friend WithEvents C2 As Button
     Friend WithEvents C1 As Button
     Friend WithEvents btnClose As Button
+    Friend WithEvents Button3 As Button
+    Friend WithEvents Button2 As Button
+    Friend WithEvents Button1 As Button
+    Friend WithEvents Button4 As Button
 End Class
